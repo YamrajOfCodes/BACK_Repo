@@ -1,9 +1,8 @@
 const Router = require("express").Router();
-const adminauthenticate = require("../../middleware/admin/adminAuthenticate");
 const productController = require("../../Controller/product/productController");
 const productstorage = require("../../multer/product/productStorage");
 
-Router.post("/addproduct",productstorage.single("productuploads"),adminauthenticate,productController.addproduct);
+Router.post("/addproduct",productstorage.single("productuploads"),productController.addproduct);
 Router.get("/getallproducts",productController.getproduct)
 
 
