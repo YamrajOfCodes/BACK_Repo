@@ -22,7 +22,7 @@ try {
        const uploads = await cloudinary.uploader.upload(file);
 
        const Product = new productDb({
-        productname,price,description,quantity,messname,productimage:uploads.secure_url
+        productname,price,description,subprice,rating,productimage:uploads.secure_url
        })
 
        await Product.save();
