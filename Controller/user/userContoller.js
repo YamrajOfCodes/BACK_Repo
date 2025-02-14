@@ -158,7 +158,9 @@ const addtocart = async(req,res)=>{
 
 const getcart = async(req,res)=>{
     try {
-        const { userid } = req.body;
+        const { userid } = req.params;
+        console.log(userid);
+        
         const cartData = await cartDb.findOne({userid:userid});
 
         res.status(200).json(cartData)

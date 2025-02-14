@@ -17,7 +17,7 @@ Router.post("/message",userController.message);
 // Cart
 
 Router.post("/addcart",userController.addtocart);
-Router.get("/getcart",userController.getcart);
+Router.get("/getcart/:userid",userController.getcart);
 Router.delete("/deletecart",userController.deleteCart);
 
 
