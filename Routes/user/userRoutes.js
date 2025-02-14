@@ -8,7 +8,18 @@ Router.post("/login",userController.Login);
 Router.get("/userverify",userauthenticate,userController.userverify);
 Router.post("/logout",userauthenticate,userController.logout)
 
-Router.post("/message",userController.message)
+Router.post("/message",userController.message);
+
+
+
+
+
+// Cart
+
+Router.post("/addcart",userController.addtocart);
+Router.get("/getcart",userController.getcart);
+Router.delete("/deletecart",userController.deleteCart);
+
 
 
 

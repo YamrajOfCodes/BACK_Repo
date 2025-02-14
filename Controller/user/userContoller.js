@@ -1,4 +1,5 @@
 const userDb = require("../../Model/user/userModel");
+const cartDb = require("../../Model/Cart/cartSchema");
 const cloudinary = require("../../cloudinary/cloudinary")
 const bcrypt = require("bcryptjs")
 const messageDb = require("../../Model/contact/contactModel");
@@ -123,6 +124,63 @@ const logout = async(req,res)=>{
 
 }
 
+const addtocart = async(req,res)=>{
+    try {
+       const { userid, productname , price , productimage} = req.body;
+       console.log(req.body);
+       
+       
+       if(!userid, !productname, !price , !productimage){
+        return res.status(400).json({error:"All the fields are required"});
+       }
+
+       const CheckCart = await cartDb.findOne({userid:userid})
+
+       if(CheckCart){
+        await cartDb.deleteOne({userid:userid})
+       }
+
+       const Cart =  new cartDb({
+        userid,
+        productname,
+        productimage,
+        price,
+       })
+
+       await Cart.save();
+       res.status(200).json(Cart);
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+const getcart = async(req,res)=>{
+    try {
+        const { userid } = req.body;
+        const cartData = await cartDb.findOne({userid:userid});
+
+        res.status(200).json(cartData)
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+const deleteCart = async(req,res)=>{
+    try {
+        const { userid } = req.body;
+        const cartData = await cartDb.deleteOne({userid:userid});
+
+        res.status(200).json(cartData)
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+
 const message = async(req,res)=>{
     try {
         const {email,name,message} = req.body;
@@ -142,4 +200,4 @@ const message = async(req,res)=>{
     }
 }
 
-module.exports = {Register,Login,userverify,logout,message}
+module.exports = {Register,Login,userverify,logout,message,addtocart,getcart,deleteCart}
