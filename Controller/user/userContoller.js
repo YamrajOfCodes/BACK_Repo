@@ -4,6 +4,7 @@ const cloudinary = require("../../cloudinary/cloudinary")
 const bcrypt = require("bcryptjs")
 const messageDb = require("../../Model/contact/contactModel");
 const SubscriptionDB = require("../../Model/Subscription/Subscription");
+const axios = require("axios");
 
 const Register = async(req,res)=>{
     try {
@@ -205,15 +206,15 @@ const message = async(req,res)=>{
 const CheckSubscription = async(req,res)=>{
     try {
     
-        const {userId} = req.body;
+        const {userid} = req.body;
       
-        const subscription = await SubscriptionDB.findOne({userid:userId});
+        const subscription = await SubscriptionDB.findOne({userid:userid});
 
         if(subscription){
-         return res.status(400).json({error:"Already subscribed"});
+         return res.status(200).json({error:"Already subscribed"});
         }
 
-        return res.status(200).json("not subscribed");
+        return res.status(400).json("not subscribed");
 
         
     } catch (error) {
