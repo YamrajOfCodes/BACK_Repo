@@ -3,7 +3,7 @@ const cartDb = require("../../Model/Cart/cartSchema");
 const cloudinary = require("../../cloudinary/cloudinary")
 const bcrypt = require("bcryptjs")
 const messageDb = require("../../Model/contact/contactModel");
-
+const SubscriptionDB = require("../../Model/Subscription/Subscription");
 
 const Register = async(req,res)=>{
     try {
@@ -202,4 +202,47 @@ const message = async(req,res)=>{
     }
 }
 
-module.exports = {Register,Login,userverify,logout,message,addtocart,getcart,deleteCart}
+const CheckSubscription = async(req,res)=>{
+    try {
+    
+        const {userId} = req.body;
+      
+        const subscription = await SubscriptionDB.findOne({userid:userId});
+
+        if(subscription){
+         return res.status(400).json({error:"Already subscribed"});
+        }
+
+        return res.status(200).json("not subscribed");
+
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+const Subscribe = async(req,res)=>{
+    try {
+      const {userid,username,days} = req.body;
+
+        if(!userid || !username || !days){
+            return res.status(400).json({error:"all fields are required"});
+        }
+
+
+       const newSubscriber = new SubscriptionDB({
+         userid,username,days
+       })
+
+       await newSubscriber.save()
+
+       res.status(200).json("Subscribe Successfully");
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+module.exports = {Register,Login,userverify,logout,message,addtocart,getcart,deleteCart,CheckSubscription,Subscribe}

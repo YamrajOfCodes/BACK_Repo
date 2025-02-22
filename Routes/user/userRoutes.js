@@ -1,4 +1,5 @@
 const Router = require("express").Router();
+const { json } = require("express");
 const userController = require("../../Controller/user/userContoller");
 const userauthenticate = require("../../middleware/user/userAuthenticate");
 
@@ -12,6 +13,11 @@ Router.post("/message",userController.message);
 
 
 
+
+// subscription model
+
+Router.get("/subscription",userController.CheckSubscription);
+Router.post("/subscribe",userController.Subscribe);
 
 
 // Cart
