@@ -19,6 +19,10 @@ Router.post("/message",userController.message);
 Router.get("/subscription",userController.CheckSubscription);
 Router.post("/subscribe",userController.Subscribe);
 
+// Payment
+Router.post("/payment",userController.CreatePayment);
+
+
 
 // Cart
 

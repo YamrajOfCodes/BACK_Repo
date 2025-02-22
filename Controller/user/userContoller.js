@@ -245,4 +245,21 @@ const Subscribe = async(req,res)=>{
     }
 }
 
-module.exports = {Register,Login,userverify,logout,message,addtocart,getcart,deleteCart,CheckSubscription,Subscribe}
+const CreatePayment = async(req,res)=>{
+    console.log("Incoming request:", req.body); // Debugging
+
+    try {
+        const apiUrl = 'https://pay0.shop/api/create-order';
+        const response = await axios.post(apiUrl, new URLSearchParams(req.body).toString(), {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+
+        console.log("API Response:", response.data); // Debugging
+        res.json(response.data);
+    } catch (error) {
+        console.error("Error:", error.response ? error.response.data : error.message);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+module.exports = {Register,Login,userverify,logout,message,addtocart,getcart,deleteCart,CheckSubscription,Subscribe,CreatePayment}
