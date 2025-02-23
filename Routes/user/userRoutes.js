@@ -16,7 +16,7 @@ Router.post("/message",userController.message);
 
 // subscription model
 
-Router.get("/subscription",userController.CheckSubscription);
+Router.get("/subscription/:userid",userController.CheckSubscription);
 Router.post("/subscribe",userController.Subscribe);
 
 // Payment
@@ -28,7 +28,7 @@ Router.post("/payment",userController.CreatePayment);
 
 Router.post("/addcart",userController.addtocart);
 Router.get("/getcart/:userid",userController.getcart);
-Router.delete("/deletecart",userController.deleteCart);
+Router.delete("/deletecart/:userid",userController.deleteCart);
 
 
 

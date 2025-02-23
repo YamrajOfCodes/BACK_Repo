@@ -173,8 +173,8 @@ const getcart = async(req,res)=>{
 
 const deleteCart = async(req,res)=>{
     try {
-        const { userid } = req.body;
-        const cartData = await cartDb.deleteOne({userid:userid});
+        const { userid } = req.params;
+        const cartData = await cartDb.deleteOne({_id:userid});
 
         res.status(200).json(cartData)
     } catch (error) {
@@ -206,15 +206,20 @@ const message = async(req,res)=>{
 const CheckSubscription = async(req,res)=>{
     try {
     
-        const {userid} = req.body;
+        const {userid} = req.params;
+        console.log(userid);
+        
       
-        const subscription = await SubscriptionDB.findOne({userid:userid});
+        const subscription = await SubscriptionDB.findOne({userid});
 
-        if(subscription){
-         return res.status(200).json({error:"Already subscribed"});
+        console.log(subscription);
+        
+
+        if(!subscription){
+            return res.status(400).json("Not Subscribed");
         }
-
-        return res.status(400).json("not subscribed");
+        
+        return res.status(200).json("Already subscribed");
 
         
     } catch (error) {
