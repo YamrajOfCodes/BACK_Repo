@@ -186,13 +186,13 @@ const deleteCart = async(req,res)=>{
 
 const message = async(req,res)=>{
     try {
-        const {email,name,message} = req.body;
+        const {email,name,message,subject} = req.body;
 
-        if(!email || !name || !message){
+        if(!email || !name || !message || !subject){
             req.status(400).json({error:"all fields are required"})
         }else{
             const newmessage = new messageDb({
-                email,name,message
+                email,name,message,subject
             })
 
             await newmessage.save();
