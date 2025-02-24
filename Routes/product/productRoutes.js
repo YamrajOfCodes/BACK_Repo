@@ -9,7 +9,7 @@ Router.get("/getallproducts",productController.getproduct)
 Router.get("/singleproduct/:productId",productController.getsingleproduct);
 Router.delete("/deleteproduct/:productId",productController.deleteproduct);
 
-Router.post("/orders",productController.orders);
+Router.post("/orders/:userid",productController.orders);
 
 
 module.exports = Router

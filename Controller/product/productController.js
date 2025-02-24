@@ -1,7 +1,8 @@
 const productDb = require("../../Model/product/productModel");
 const cloudinary = require("../../cloudinary/cloudinary");
 const orderDb = require("../../Model/Order/orderModel");
-
+const SubscribeDB = require("../../Model/Subscription/Subscription");
+const { subscribe } = require("../../Routes/user/userRoutes");
 
 const addproduct = async(req,res)=>{
 
@@ -83,11 +84,19 @@ const deleteproduct = async(req,res)=>{
 const orders = async(req,res)=>{
 
   try {
-    const {Firstname,mobile,productname,price,messname} = req.body;
+    const {Firstname,mobile,productname,price} = req.body;
+
+    const {userid} = req.params;
+  console.log(userid);
+  
+
+
+
+
 
   
 
-    if(!Firstname || !messname || !mobile || !price || !productname){
+    if(!Firstname || !mobile || !price || !productname){
      return res.status(400).json({error:"please wait few seconds "});
     }
 
@@ -98,18 +107,39 @@ const orders = async(req,res)=>{
     }else if(neworder){
          return res.status(400).json({error:`you already placed another order`});
     }else{
-      const neworder = new orderDb({
-        Firstname,
-        messname,
-        price,
-        mobile,
-        productname
-      })
 
-      await neworder.save();
-      res.status(200).json("order is placed")
-    }
+     const Subscirbe = await SubscribeDB.findOne({userid:userid});
+    //  console.log("reach")
+    //  console.log(Subscirbe);
+     
 
+     if(Subscirbe){
+      // console.log(Subscirbe.days);
+      
+      if(Subscirbe.days > 0){
+
+       Subscirbe.days = Subscirbe.days - 1;
+       await Subscirbe.save();
+
+        const neworder = new orderDb({
+          Firstname,
+          price,
+          mobile,
+          productname
+        })
+  
+        await neworder.save();
+        res.status(200).json("order is placed")
+      }else{
+        // console.log("hi");
+        
+       res.status(400).json({error:"Your Subscription is out of date"});
+      }
+ 
+      }
+     }
+
+    
 
   } catch (error) {
     console.log(error);

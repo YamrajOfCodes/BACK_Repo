@@ -13,10 +13,6 @@ const orderSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    messname:{
-        type:String,
-        required:true
-    },
     price:{
         type:String,
         required:true
