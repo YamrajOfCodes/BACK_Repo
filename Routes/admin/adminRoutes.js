@@ -9,16 +9,16 @@ Router.post("/register",adminstorage.single("adminuploads"),admincontroller.Regi
 Router.post("/login",admincontroller.Login);
 Router.post("/adminverify",adminauthenticate,admincontroller.adminverify);
 Router.post("/logout",adminauthenticate,admincontroller.Logout)
-Router.get("/getallusers",adminauthenticate,admincontroller.getallusers);
-Router.delete("/deleteuser/:userId",adminauthenticate,admincontroller.deleteuser);
+Router.get("/getallusers",admincontroller.getallusers);
+Router.delete("/deleteuser/:userId",admincontroller.deleteuser);
 
 
 
 //order Roues
 
 Router.post("/orders",productController.orders);
-Router.get("/getorders", adminauthenticate,productController.getallorders);
-Router.delete("/deleteorder/:orderId",adminauthenticate,productController.deleteorders);
+Router.get("/getorders",productController.getallorders);
+Router.delete("/deleteorder/:orderId",productController.deleteorders);
 
 
 
