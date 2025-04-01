@@ -8,12 +8,12 @@ const axios = require("axios");
 
 const Register = async(req,res)=>{
     try {
-        const {Firstname,Lastname,email,mobile,password,confirmpassword,address} = req.body;
+        const {Firstname,Lastname,email,mobile,password,address} = req.body;
 
         console.log(req.body);
         
 
-        if(!Firstname || !Lastname || !email || !password || !confirmpassword || !mobile){
+        if(!Firstname || !Lastname || !email || !password  || !mobile){
             return res.status(400).json({error:"all fields are required"})
         }
 
@@ -28,8 +28,8 @@ const Register = async(req,res)=>{
           return res.status(400).json({error:"mobile number is already an use"})
         }
 
-        if(password !==confirmpassword){
-            return res.status(400).json({error:"both passwords does not matched"})
+        if(password=="123"){
+            return res.status(400).json({error:"Password is weak"})
         }else{
 
            const newuser = new userDb({
