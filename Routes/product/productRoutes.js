@@ -10,7 +10,7 @@ Router.get("/singleproduct/:productId",productController.getsingleproduct);
 Router.delete("/deleteproduct/:productId",productController.deleteproduct);
 
 Router.post("/orders/:userid",productController.orders);
-Router.delete('/deleteorder',productController.deleteorders);
+Router.delete('/deleteorder/:id',productController.deleteorders);
 
 
 module.exports = Router
